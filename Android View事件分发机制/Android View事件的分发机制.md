@@ -1,5 +1,5 @@
-###Android View事件的分发机制
-####1. MotionEvent事件
+### Android View事件的分发机制
+#### 1. MotionEvent事件
 我们对屏幕的点击，滑动，抬起等一系列的动作，其实都是由一个一个的MotionEvent事件组成的。这些MotionEvent事件主要有三个类型:  
 1. ACTION\_DOWN: 手指触摸屏幕，按下去的一瞬间产生该事件  
 2. ACTION\_MOVE: 手指在屏幕上滑动时产生该事件  
@@ -10,7 +10,7 @@
 1. 点击以后抬起：ACTION\_DOWN -> ACTION\_UP  
 2. 点击以后，滑动，最后抬起：ACTION\_DOWN -> n 个  ACTION\_MOVE -> ACTION\_UP  
 
-###2. MotionEvent事件的分发
+### 2. MotionEvent事件的分发
 所谓事件的分发，其实就是对MotionEvent事件的分发，当一个MotionEvent事件产生以后，系统需要把他传递给一个具体的View。而这个传递的过程就是分发过程  
 而分发的过程主要涉及到View的三个重要函数  
 
@@ -51,7 +51,7 @@
 
 ![](./View事件分发流程.png)
 
-###3. View事件分发源码解析
+### 3. View事件分发源码解析
 #### 点击事件最先传递到Activity，由Acivity的dispatchTouchEvent方法来对事件进行分发
 
 ```
