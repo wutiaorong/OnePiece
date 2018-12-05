@@ -46,7 +46,7 @@
 
 我们都知道ViewGroup是View的子类，也就是说ViewGroup本身就是一个View，但是它可以包含子View（当然子View也可能是一个ViewGroup），所以不难理解，上面所展示的伪代码表示的是ViewGroup 处理事件分发的流程。而View本身是不存在分发(这不代表他没有dispatchTouchEvent方法，只是他不会像ViewGroup那样进行分发)，所以也没有拦截方法（onInterceptTouchEvent），它只能消费或者不消费。  
 
-**我们通过几个流程图来更加清晰地认识下**
+**我们通过几个流程图来更加清晰地认识下**  
 ![](./MotionEvent事件向下分发.png)  
 
 ![](./View事件分发流程.png)
