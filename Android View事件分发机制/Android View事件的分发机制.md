@@ -26,7 +26,7 @@
 
 **我们可以通过个具体的例子来初步了解一下事件的分发机制**  
 
-假设我们有一个ViewGroup包含了一个View。这时候我们在View上面滑动，产生了一系列的MotionEvent事件，MotionEvent事件首先传递给了ViewGroup。这时候View的dispatchTouchEvent事件就会被调用。在ViewGroup的dispatchTouchEvent方法中，首先通过调用onInterceptTouchEvent方法来判断是否要拦截该事件（ViewGroup的onInterceptTouchEvent默认返回false。表示不拦截事件）如果该事件被ViewGroup拦截了。那么ViewGroup的onToucheEvent事件就会被调用。如果ViewGroup不拦截该事件，那么该事件就会被传递给他的子View。在本例中，就是这上文提到的ViewGroup包含的这个View。子View的dispatchTouchEvent方法就会被调用。 
+假设我们有一个ViewGroup包含了一个View。这时候我们在View上面滑动，产生了一系列的MotionEvent事件，MotionEvent事件首先传递给了ViewGroup。这时候ViewGroup的dispatchTouchEvent事件就会被调用。在ViewGroup的dispatchTouchEvent方法中，首先通过调用onInterceptTouchEvent方法来判断是否要拦截该事件（ViewGroup的onInterceptTouchEvent默认返回false。表示不拦截事件）如果该事件被ViewGroup拦截了。那么ViewGroup的onToucheEvent事件就会被调用。如果ViewGroup不拦截该事件，那么该事件就会被传递给他的子View。在本例中，就是这上文提到的ViewGroup包含的这个View。子View的dispatchTouchEvent方法就会被调用。 
  
 **下面我们用一段伪代码来描述一下**  
 
@@ -204,9 +204,11 @@ else {
 **接下来在看第三个知识点**  
 **如果某一个子View拦截了事件，而且不干扰父View拦截事件，那么父View可以在某个ACTION的时候进行拦截，拦截了以后该事件就由ViewGroup处理**  
 
+这个知识点的具体解释如下：  
 ACTION\_DOWN的时候，子View无法拦截该事件。这时候ViewGroup如果不拦截事件，那么会去遍历子View，如果有子View拦截了该事件，那么mFirstTouchTarget就不为空，那么当下次的ACTION\_MOVE以及ACTION\_UP事件到来的时候，因为mFirstTouchTarget不为空，所以会进入拦截判断，调用onInterceptTouchEvent来判断是否要返回。  
 
-**当ViewGroup不拦截事件，那么事件将下发给子View进行处理。**  
+**接下来我们来分析当ViewGroup不拦截事件情况的源码**  
+当ViewGroup不拦截事件，那么事件将下发给子View进行处理。
 
 ```
 class ViewGroup:
